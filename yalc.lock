@@ -1,0 +1,10 @@
+{
+  "version": "v1",
+  "packages": {
+    "react-native-toast-message": {
+      "signature": "7686984587aa6bf3493e05f7ef474cb4",
+      "file": true,
+      "replaced": "2.1.0-beta.1"
+    }
+  }
+}

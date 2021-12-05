@@ -1,19 +1,34 @@
-import React from 'react'
+import React from "react";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { View, StyleProp, ViewStyle, ColorValue, StyleSheet, Modal, ModalProps } from 'react-native';
-import { ToastInstance } from './ToastWrapper';
-import Toast from 'react-native-toast-message';
+import {
+  View,
+  StyleProp,
+  ViewStyle,
+  ColorValue,
+  StyleSheet,
+  Modal,
+  ModalProps
+} from "react-native";
+import { ToastInstance } from "./ToastWrapper";
+import Toast from "react-native-toast-message";
 
 type BottomSheetModalProps = Partial<
-  Omit<ModalProps, 'useNativeDriver' | 'hideModalContentWhileAnimating' | 'swipeDirection' | 'backdropOpacity'>
+  Omit<
+    ModalProps,
+    | "useNativeDriver"
+    | "hideModalContentWhileAnimating"
+    | "swipeDirection"
+    | "backdropOpacity"
+  >
 > & {
-  defaultPadding?: boolean
-  contentContainerStyle?: StyleProp<ViewStyle>
-  lightTheme?: boolean
-  borderRadius?: number
-  backgroundColor?: ColorValue
-  isVisible: boolean
-}
+  defaultPadding?: boolean;
+  contentContainerStyle?: StyleProp<ViewStyle>;
+  lightTheme?: boolean;
+  borderRadius?: number;
+  backgroundColor?: ColorValue;
+  isVisible: boolean;
+  toastNestingLevel: ToastProps["level"];
+};
 
 function BottomSheetModal({
   defaultPadding,
@@ -24,9 +39,9 @@ function BottomSheetModal({
   isVisible,
   backgroundColor,
   borderRadius = 20,
+  toastNestingLevel,
   ...rest
 }: BottomSheetModalProps) {
-
   return (
     <Modal
       // if `useNativeDriver` is true, `hideModalContentWhileAnimating` needs to also be true
@@ -41,10 +56,12 @@ function BottomSheetModal({
       // set the opacity on the colour itself
       animationType="fade"
       {...rest}>
-        <View style={[styles.centeredView, contentContainerStyle]}><View style={styles.modalView}>{children}</View></View>
-        <ToastInstance setRef={Toast.setModalRef} />
+      <View style={[styles.centeredView, contentContainerStyle]}>
+        <View style={styles.modalView}>{children}</View>
+      </View>
+      <ToastInstance nestingLevel={toastNestingLevel} />
     </Modal>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -68,7 +85,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 12,
     elevation: 5
-  },
-})
+  }
+});
 
-export default BottomSheetModal
+export default BottomSheetModal;
